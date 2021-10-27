@@ -30,9 +30,9 @@ public class UserController {
 		return ResponseEntity.ok(userService.getMyUserWithAuthorities().get());
 	}
 
-	@GetMapping("/user/{username}")
+	@GetMapping("/user/{userid}")
 	@PreAuthorize("hasAnyRole('ADMIN')")			// ROLE_ADMIN만 접근가능
-	public ResponseEntity<User> getUserInfo(@PathVariable String username) {
-		return ResponseEntity.ok(userService.getUserWithAuthorities(username).get());
+	public ResponseEntity<User> getUserInfo(@PathVariable String userid) {
+		return ResponseEntity.ok(userService.getUserWithAuthorities(userid).get());
 	}
 }

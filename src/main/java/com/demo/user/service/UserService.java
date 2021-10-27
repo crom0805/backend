@@ -29,8 +29,8 @@ public class UserService {
 	 */
 	@Transactional
 	public User signup(UserDto userDto) {
-		// username이 DB에 존재하지 않으면 Authority와 User 정보를 생성해서 userRepository.save 메소드를 통해 DB에 저장
-		if (userRepository.findOneWithAuthoritiesByUsername(userDto.getUsername()).orElse(null) != null) {
+		// userid가 DB에 존재하지 않으면 Authority와 User 정보를 생성해서 userRepository.save 메소드를 통해 DB에 저장
+		if (userRepository.findOneWithAuthoritiesByUserid(userDto.getUserid()).orElse(null) != null) {
 			throw new DuplicateMemberException("이미 가입되어 있는 유저입니다.");
 		}
 
@@ -39,7 +39,7 @@ public class UserService {
 			.build();
 
 		User user = User.builder()
-			.username(userDto.getUsername())
+			.userid(userDto.getUserid())
 			.password(passwordEncoder.encode(userDto.getPassword()))
 			.nickname(userDto.getNickname())
 			.authorities(Collections.singleton(authority))
@@ -50,21 +50,21 @@ public class UserService {
 	}
 
 	/**
-	 * 파라미터로 받은 username을 기준으로 정보를 가져옴
-	 * @param username
+	 * 파라미터로 받은 userid를 기준으로 정보를 가져옴
+	 * @param userid
 	 * @return
 	 */
 	@Transactional(readOnly = true)
-	public Optional<User> getUserWithAuthorities(String username) {
-		return userRepository.findOneWithAuthoritiesByUsername(username);
+	public Optional<User> getUserWithAuthorities(String userid) {
+		return userRepository.findOneWithAuthoritiesByUserid(userid);
 	}
 
 	/**
-	 * SecurityContext에 저장된 username의 정보만 가져옴
+	 * SecurityContext에 저장된 userid의 정보만 가져옴
 	 * @return
 	 */
 	@Transactional(readOnly = true)
 	public Optional<User> getMyUserWithAuthorities() {
-		return SecurityUtil.getCurrentUsername().flatMap(userRepository::findOneWithAuthoritiesByUsername);
+		return SecurityUtil.getCurrentUserid().flatMap(userRepository::findOneWithAuthoritiesByUserid);
 	}
 }

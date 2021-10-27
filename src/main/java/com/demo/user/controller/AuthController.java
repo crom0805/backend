@@ -32,9 +32,9 @@ public class AuthController {
 	@PostMapping("/authenticate")
 	public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
 
-		// loginDto의 username과 password를 이용해 UsernamePasswordAuthenticationToken 객체생성
+		// loginDto의 userid와 password를 이용해 UsernamePasswordAuthenticationToken 객체생성
 		UsernamePasswordAuthenticationToken authenticationToken =
-			new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
+			new UsernamePasswordAuthenticationToken(loginDto.getUserid(), loginDto.getPassword());
 
 		// authenticate 메소드가 실행될때 CustomUserDetailsService.loadUserByUsername 메소드가 실행됨
 		Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);

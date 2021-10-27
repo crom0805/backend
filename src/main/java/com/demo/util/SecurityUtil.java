@@ -16,10 +16,10 @@ public class SecurityUtil {
 	}
 
 	/**
-	 * SecurityContext의 Authentication객체를 이용해 username을 리턴해준다.
-	 * @return username
+	 * SecurityContext의 Authentication객체를 이용해 userid를 리턴해준다.
+	 * @return userid
 	 */
-	public static Optional<String> getCurrentUsername() {
+	public static Optional<String> getCurrentUserid() {
 		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		if (authentication == null) {
@@ -27,14 +27,14 @@ public class SecurityUtil {
 			return Optional.empty();
 		}
 
-		String username = null;
+		String userid = null;
 		if (authentication.getPrincipal() instanceof UserDetails) {
 			UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
-			username = springSecurityUser.getUsername();
+			userid = springSecurityUser.getUsername();
 		} else if (authentication.getPrincipal() instanceof String) {
-			username = (String) authentication.getPrincipal();
+			userid = (String) authentication.getPrincipal();
 		}
 
-		return Optional.ofNullable(username);
+		return Optional.ofNullable(userid);
 	}
 }
