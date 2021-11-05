@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class HelloController {
 
-	@GetMapping("/hello2")
+	@GetMapping("/hello")
 	public ResponseEntity<String> hello() {
-		return ResponseEntity.ok("Hello~");
+		return ResponseEntity.ok("Hello!!~");
 	}
 
 }
